@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <style>
+            @import url("https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@200&display=swap");
+            li {
+
+                font-size: 2rem;
+                font-family: "Noto Serif JP", serif;
+                border: 1px solid darkblue;
+            }
+
+            li  > img{
+                height:200px;
+                 
+            }
+        </style>
+        <title>cartaVinos</title>
+    </head>
+    <body>
+        <center>
+            <h1>Nuestras Sugerencias de Vinos Para Tu Cena </h1>
+            <hr />
+            <div id="app">
+                <hr />
+                <img v-bind:src="" alt="" height="200" />
+                <h1>Carta de Vinos Sensazione </h1>
+                <p></p>
+                <hr />
+
+                <h3></h3>
+                <ul>
+                    <li v-for="pasta in pastas">{{pasta}}</li>
+                </ul>
+
+                <button v-on:click="vinosHandler">
+                    Carta de Vinos Completa
+                </button>
+                <hr />
+                <div v-if="ListaVinos === null">
+                    <h1 v-if="error == null">
+                        Estamos cargando la información
+                    </h1>
+                    <h1 v-else>{{error}}</h1>
+                </div>
+                <div v-else-if="ListaVinos !== null">
+                    <ul>
+                        <li v-for="vino in ListaVinos">
+                            {{vino.vino_varietal}}
+                            {{vino.bodega}}
+                            {{vino.procedencia}}
+                            <h3>Marida con:</h3>
+                            {{vino.marida_con}}
+                            {{vino.precio}}
+                            <img v-bind:src="vino.img_url" alt="" />
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </center>
+    </body>
+    <script type="module">
+        import { createApp } from "https://unpkg.com/vue@3/dist/vue.esm-browser.js";
+        const VINOS_URL = "https://sheetdb.io/api/v1/b8p9r56bjqs5y";
+        const JSON_LOCAL = "./json/comidas.json";
+        /*INSTANCIAR EL CORE*/
+
+        const CoreApp = {
+            data: function () {
+                return {
+                    //data inicializacion
+                    ListaVinos: null,
+                    error: null,
+                    comidas: {
+                        banner: null,
+                        nombre: null,
+                        acerca_de_nosotros: null,
+                    },
+                    pastas: null,
+                };
+            },
+
+            // created: function () {
+            //     fetch(JSON_LOCAL)
+            //         .then((res) => res.json())
+            //         .then((data) => (this.comidas = data["comidas"]));
+
+            //     fetch(JSON_LOCAL)
+            //         .then((res) => res.json())
+            //         .then((data) => (this.pastas = data["pastas"]));
+            // },
+
+            async created() {
+                try {
+                    const res = await fetch(JSON_LOCAL);
+                    const data = await res.json();
+
+                    this.comidas = data["comidas"];
+                    this.pastas = data["pastas"];
+                } catch (e) {
+                    console.log(e);
+                }
+            },
+
+            methods: {
+                vinosHandler: function () {
+                    fetch(VINOS_URL)
+                        .then((res) => res.json())
+                        .then((data) => (this.ListaVinos = data))
+                        .catch((e) => (this.error = e.toString()));
+                },
+                // vinosHandler: async function () {
+                //     try {
+                //         const res = await fetch(VINOS_URL);
+                //         const data = await res.json();
+                //         this.ListaVinos = data;
+                //     } catch (e) {
+                //         console.log(e.toString());
+                //         this.error = e.toString();
+                //         console.log(this.error);
+                //     }
+                // },
+            },
+        };
+
+        //PASARLO POR ARGUMENTO AL METODO createAPP --> <CORE></CORE>
+
+        const app = createApp(CoreApp);
+
+        /*MONTAR LA APP*/
+        app.mount("#app");
+    </script>
+</html>
