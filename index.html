@@ -8,6 +8,7 @@
             @import url("https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@200&display=swap");
             ul {
                 padding: 2rem;
+                
 
             }
             li {
@@ -15,6 +16,7 @@
                 font-size: 1rem;
                 font-family: "Noto Serif JP", serif;
                 border-bottom: 1px solid darkblue;
+                width: 60%;
 
             }
 
@@ -63,13 +65,15 @@
                 <div v-else-if="ListaVinos !== null">
                     <ul>
                         <li v-for="vino in ListaVinos">
-                        <h3><span>{{vino.vino_varietal}}</span></h3>
+                        <h3><span>
+                             {{vino.vino_varietal}}
+                             {{vino.bodega}}
+                             {{vino.procedencia}}</span></h3>
                         <img v-bind:src="vino.img_url" alt="" />
-                         <h2>Marida con:</h2>
+                         <h3>Marida con:</h3>
                             {{vino.marida_con}}   
-                            {{vino.bodega}}
-                            {{vino.procedencia}}
-                            {{vino.precio}}
+                            
+                        <h3>Precio Sugerido:{{vino.precio}}</h3>
                               
                             
                         </li>
