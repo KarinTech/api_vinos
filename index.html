@@ -6,16 +6,30 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <style>
             @import url("https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@200&display=swap");
-            li {
+            ul {
+                padding: 2rem;
 
-                font-size: 2rem;
+            }
+            li {
+                padding: 1rem;
+                font-size: 1rem;
                 font-family: "Noto Serif JP", serif;
-                border: 1px solid darkblue;
+                border-bottom: 1px solid darkblue;
+
             }
 
             li  > img{
-                height:200px;
+                height: 180px;
+                width: 160x;
+                padding: 0.5rem;
+                margin-left: 5px;
+                margin-bottom: 1px;
+                margin-right: 8px;
+
                  
+            }
+            li > span {
+                margin-top: 0px;
             }
         </style>
         <title>cartaVinos</title>
@@ -49,13 +63,15 @@
                 <div v-else-if="ListaVinos !== null">
                     <ul>
                         <li v-for="vino in ListaVinos">
-                            {{vino.vino_varietal}}
+                        <h3><span>{{vino.vino_varietal}}</span></h3>
+                        <img v-bind:src="vino.img_url" alt="" />
+                         <h2>Marida con:</h2>
+                            {{vino.marida_con}}   
                             {{vino.bodega}}
                             {{vino.procedencia}}
-                            <h3>Marida con:</h3>
-                            {{vino.marida_con}}
                             {{vino.precio}}
-                            <img v-bind:src="vino.img_url" alt="" />
+                              
+                            
                         </li>
                     </ul>
                 </div>
@@ -65,7 +81,7 @@
     <script type="module">
         import { createApp } from "https://unpkg.com/vue@3/dist/vue.esm-browser.js";
         const VINOS_URL = "https://sheetdb.io/api/v1/b8p9r56bjqs5y";
-        const JSON_LOCAL = "./json/comidas.json";
+        //const JSON_LOCAL = "./json/comidas.json";
         /*INSTANCIAR EL CORE*/
 
         const CoreApp = {
