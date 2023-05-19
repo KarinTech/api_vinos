@@ -8,12 +8,10 @@
         
             @import url("https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@200&display=swap");
             
-            .titulo {
-                background-color: rgb(122, 129, 129);
-            }
+          
            
             h1 {
-                color: rgb(123, 95, 34);
+                color: rgb(126, 109, 31);
                 font-weight:bolder;
              
             -webkit-text-stroke: 2px black;
@@ -37,18 +35,22 @@
             button{
               
                 height:36px;
-                border-radius:6%;
+                
                 background-color: rgb(56, 38, 0);
                 color:white; 
+                border-bottom: 2px, dark;
                 font-weight: bold;
                 box-sizing:border-box;
                 display:flex;
-                justify-items: center;
+                vertical-align:center;
                 
                 
                 
             }
             
+            a {
+                text-decoration:none;
+            }
             ul {
                 margin-top:60px;
                 padding: 2rem;
@@ -83,10 +85,7 @@
     </head>
     <body>
         <center>
-        <div class= "titulo">
-            <h1>Nuestras Sugerencias de Vinos Para Tu Cena </h1>
-            <hr />
-            </div>
+        
             <div id="app">
                 <hr />
                 <p>
@@ -101,13 +100,15 @@
                
                 <hr />
                 <hr />
+
                 <div v-if="ListaVinos === null">
                   <button v-on:click="vinosHandler">
-                    Carta de Vinos Completa
+                     Ver Carta de Vinos
               
                 </button>
                     <h1 v-else>{{error}}</h1>
                 </div>
+                <a href ="inicio">Volver a Pagina Sensazione</a>
                 <div v-else-if="ListaVinos !== null">
                     <ul>
                         <li v-for="vino in ListaVinos">
@@ -131,7 +132,7 @@
     </body>
     <script type="module">
         import { createApp } from "https://unpkg.com/vue@3/dist/vue.esm-browser.js";
-        const VINOS_URL = "https://sheetdb.io/api/v1/b8p9r56bjqs5y";
+        const VINOS_URL = "https://sheetdb.io/api/v1/5d13zvo6ot7li";
         //const JSON_LOCAL = "./json/comidas.json";
         /*INSTANCIAR EL CORE*/
 
@@ -165,8 +166,7 @@
                     const res = await fetch(JSON_LOCAL);
                     const data = await res.json();
 
-                    this.comidas = data["comidas"];
-                    this.pastas = data["pastas"];
+                  
                 } catch (e) {
                     console.log(e);
                 }
